@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  ggml:
+    build:
+      context: .
+      dockerfile: Dockerfile.devcontainer
+    image: ggml-devcontainer-image
+    container_name: ggml-devcontainer
+    volumes:
+      - ../cpp/ggml:/ggml
+      - ../cpp/ggml-docker-docs/wav:/wav
+      - ../cpp/ggml-docker-docs/models:/models
+    tty: true
+
+# Using this docker compose file
+# docker-compose -f docker-compose.devcontainer.yml up --build
