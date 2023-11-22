@@ -27,4 +27,9 @@ git commit -m "$commit_message"
 git push origin $branch
 
 
+git config --global user.name "Ahmed Soliman"
+git config --global user.email "ahmed.soliman@avrioc.com"
+
+
+
 sleep 3s

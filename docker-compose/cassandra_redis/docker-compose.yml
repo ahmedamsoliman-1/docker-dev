@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  cassandra:
+    image: cassandra:latest
+    container_name: cassandra
+    ports:
+      - "9042:9042"  # Cassandra CQL native port
+    volumes:
+      - cassandra_data:/var/lib/cassandra  # Persisting Cassandra data
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"  # Redis default port
+
+volumes:
+  cassandra_data:
+    driver: local
