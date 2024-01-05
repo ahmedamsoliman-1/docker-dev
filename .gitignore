@@ -25,3 +25,4 @@ pyenv
 Vagrantfile
 .env
 *.log
+mongodb_data
