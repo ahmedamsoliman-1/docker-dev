@@ -14,7 +14,7 @@ services:
     ports:
       - '3090:3090'
     environment:
-      - 'GF_SECURITY_ADMIN_PASSWORD=yourpassword' # Change this to your desired password
+      - 'GF_SECURITY_ADMIN_PASSWORD=yourpassword'
     volumes:
       - ./grafana:/var/lib/grafana
 
