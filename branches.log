@@ -5,4 +5,5 @@
   remotes/origin/HEAD -> origin/main
   remotes/origin/dev
   remotes/origin/docker-dev
+  remotes/origin/docker-development
   remotes/origin/main
