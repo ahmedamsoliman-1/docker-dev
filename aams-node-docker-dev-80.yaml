@@ -1,0 +1,7 @@
+version: '3.8'
+
+services:
+  aams-node-docker-dev-88:
+    image: ahmedalimsolimansd/aams-node-docker-dev-80:1.0
+    ports:
+      - "80:80"

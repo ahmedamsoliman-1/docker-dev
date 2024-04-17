@@ -1,4 +1,7 @@
 * dev
+  docker-dev
   main
   remotes/origin/HEAD -> origin/main
+  remotes/origin/dev
+  remotes/origin/docker-dev
   remotes/origin/main
