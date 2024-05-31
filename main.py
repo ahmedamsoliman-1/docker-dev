@@ -92,6 +92,24 @@ def secrets():
     run_command('kubectl get secrets mysecret -o yaml')
     pass
 
+def get_dashboard():
+    # Deploy the Dashboard
+    run_command('kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.6.1/aio/deploy/recommended.yaml')
+
+    # Create Service Account
+    run_command('kubectl create serviceaccount dashboard-admin-sa')
+
+    # Create ClusterRoleBinding
+    run_command('kubectl create clusterrolebinding dashboard-admin-sa --clusterrole=cluster-admin --serviceaccount=default:dashboard-admin-sa')
+
+    # Get the Secret Name
+    run_command('kubectl get secrets')
+
+    # Describe the Secret to get the Token (replace <secret-name> with the actual name)
+    run_command('kubectl describe secret <secret-name>')
+
+    # Start the Proxy
+    run_command('kubectl proxy')
 
 
 def load_balance_service_discovery():
@@ -176,13 +194,23 @@ def prometheus():
 
 
 def prometheus_II():
-    run_command('kubectl get nodes')
-    # run_command('kubectl create -f ./manifests/setup/')
-    # run_command('kubectl create -f ./manifests/')
+    # run_command('kubectl get nodes')
+    # run_command('kubectl create -f ./aams/monitoring/manifests/setup/')
+    # run_command('kubectl create -f ./aams/monitoring/manifests/')
+
     run_command('kubectl get deploy -n monitoring')
     run_command('kubectl get svc -n monitoring')
     run_command('kubectl get pods -n monitoring')
-    
+
+def check_cluster():
+    run_command('kubectl get nodes')
+    run_command('kubectl get ns')
+
+    run_command('kubectl get deploy --all-namespaces')
+    run_command('kubectl get svc --all-namespaces')
+    run_command('kubectl get po --all-namespaces')
+
+
 def main():
     # create_kind_cluster()
     # prometheus_II()
@@ -199,6 +227,7 @@ def main():
     # load_balance_service_discovery()
     # ingress_controller_deployment()
     # nodejs()
+    check_cluster()
     pass
 
 if __name__ == "__main__":
