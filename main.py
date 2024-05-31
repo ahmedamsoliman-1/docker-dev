@@ -11,6 +11,9 @@ def run_command(command):
     if output: stream_logger.stream_logger.info(output.decode('utf-8'))
     if error: stream_logger.stream_logger.error(error.decode('utf-8'))
 
+def create_kind_cluster():
+    run_command("kind create cluster --image kindest/node:v1.23.6 --config kind.yaml")
+
 def basics():
     run_command("minikube start")
     run_command("kind create cluster --image kindest/node:v1.23.5")
@@ -137,10 +140,55 @@ def nodejs():
     # run_command(f'kubectl apply -n example-nodejs-app -f nodejs/deployment/service.yaml')
     pass
 
-def ingress():
+def monitor_ingress():
+    run_command('kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml')
+
+    run_command('kubectl apply -f ingress/monitoring-ingress.yaml')
+
+    run_command('kubectl get pods --all-namespaces')
     pass
+
+def prometheus():
+    run_command('kubectl get nodes')
+    run_command('kubectl create ns monitoring')
+
+    # prometheus operator
+    run_command('kubectl -n monitoring apply -f monitoring/prometheus/kubernetes/1.18.4/prometheus-operator')
+    run_command('kubectl -n monitoring apply -f monitoring/prometheus/kubernetes/1.18.4/node-exporter')
+    run_command('kubectl -n monitoring apply -f monitoring/prometheus/kubernetes/1.18.4/kube-state-metrics')
+    run_command('kubectl -n monitoring apply -f monitoring/prometheus/kubernetes/1.18.4/alertmanager')
+    run_command('kubectl -n monitoring apply -f monitoring/prometheus/kubernetes/1.18.4/prometheus-cluster-monitoring')
+    run_command('kubectl -n monitoring create -f monitoring/prometheus/kubernetes/1.18.4/grafana')
+
+
+
+    run_command('kubectl -n monitoring get pods')
+
+    run_command('kubectl -n monitoring port-forward svc/alertmanager-main 9093')
+    run_command('kubectl -n monitoring port-forward svc/grafana 3000')
+    run_command('kubectl -n monitoring port-forward svc/prometheus-k8s 9090')
+
+    run_command('kubectl -n monitoring port-forward svc/kube-state-metrics 8443')
+    run_command('kubectl -n monitoring port-forward svc/node-exporter 9100')
+
+    run_command('kubectl -n monitoring port-forward svc/prometheus-adapter 443')
+    run_command('kubectl -n ingress-nginx port-forward svc/ingress-nginx-controller 80')
+
+
+def prometheus_II():
+    run_command('kubectl get nodes')
+    # run_command('kubectl create -f ./manifests/setup/')
+    # run_command('kubectl create -f ./manifests/')
+    run_command('kubectl get deploy -n monitoring')
+    run_command('kubectl get svc -n monitoring')
+    run_command('kubectl get pods -n monitoring')
+    
 def main():
-    ingress()
+    # create_kind_cluster()
+    # prometheus_II()
+    # prometheus()
+    # monitor_ingress()
+    # ingress()
     # basics()
     # get_command()
     # namespaces()
