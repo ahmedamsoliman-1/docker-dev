@@ -210,6 +210,11 @@ def check_cluster():
     run_command('kubectl get svc --all-namespaces')
     run_command('kubectl get po --all-namespaces')
 
+def example_app():
+    # run_command('kubectl create ns example-app')
+    # run_command('kubectl create -f ./aams/example-app-1/nginx-deployment.yaml')
+    # run_command('kubectl create -f ./aams/example-app-1/nginx-svc.yaml')
+    run_command('kubectl get po -n example-app')
 
 def main():
     # create_kind_cluster()
@@ -228,6 +233,7 @@ def main():
     # ingress_controller_deployment()
     # nodejs()
     check_cluster()
+    # example_app()
     pass
 
 if __name__ == "__main__":
