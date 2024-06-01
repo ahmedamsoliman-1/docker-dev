@@ -11,8 +11,6 @@ curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s http
 chmod +x ./kubectl
 mv ./kubectl /usr/local/bin/kubectl
 
-# install helm 
-
 curl -o /tmp/helm.tar.gz -LO https://get.helm.sh/helm-v3.10.1-linux-amd64.tar.gz
 tar -C /tmp/ -zxvf /tmp/helm.tar.gz
 mv /tmp/linux-amd64/helm /usr/local/bin/helm

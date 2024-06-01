@@ -13,6 +13,8 @@ def run_command(command):
 
 def create_kind_cluster():
     run_command("kind create cluster --image kindest/node:v1.23.6 --config kind.yaml")
+    run_command("kind create cluster --image kindest/node:v1.29.4 --config kind.yaml")
+
 
 def basics():
     run_command("minikube start")
@@ -48,7 +50,15 @@ def describe():
     run_command("kubectl describe pods -n kube-system")
 
 def version():
+    CHART_VERSION="4.10.0"
+    APP_VERSION="1.10.0"
     run_command("kubectl version")
+
+def ingress_latest():
+
+    check_cluster()
+    run_command('kubect get svc -n ingress-nginx')
+    pass
 
 def deployment():
     # A Deployment controller provides declarative updates for Pods and ReplicaSets.
@@ -142,10 +152,6 @@ def ingress_controller_deployment():
     run_command('kubectl apply -f kubernetes/ingress/controller/nginx/tls-secret.yaml')
 
     run_command('kubectl apply -f kubernetes/ingress/ingress-nginx-example.yaml')
-    # run_command('kubectl')
-    # run_command('kubectl')
-    # run_command('kubectl')
-    # run_command('kubectl')
 
 def nodejs():
     # docker build . -t ahmedalimsolimansd/nodejs:v2
@@ -239,9 +245,10 @@ def main():
     # ingress_controller_deployment()
     # nodejs()
     # example_app()
-    check_cluster()
-    # ingress_2023()
-    helm()
+    # ingress_controller_deployment()
+    # check_cluster()
+    # helm()
+    ingress_latest()
     pass
 
 if __name__ == "__main__":

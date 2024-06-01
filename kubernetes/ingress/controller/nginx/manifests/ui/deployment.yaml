@@ -1,0 +1,35 @@
+# deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tree-ui
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tree-ui
+  template:
+    metadata:
+      labels:
+        app: tree-ui
+    spec:
+      containers:
+      - name: tree-ui
+        image: 037588651218.dkr.ecr.me-central-1.amazonaws.com/ai-chess/cs2-training-ui:latest
+        ports:
+        - containerPort: 3003
+
+# service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: tree-ui
+  namespace: default
+spec:
+  selector:
+    app: tree-ui
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3003
