@@ -216,6 +216,12 @@ def example_app():
     # run_command('kubectl create -f ./aams/example-app-1/nginx-svc.yaml')
     run_command('kubectl get po -n example-app')
 
+def ingress_2023():
+    pass
+
+def helm():
+    pass
+
 def main():
     # create_kind_cluster()
     # prometheus_II()
@@ -232,8 +238,10 @@ def main():
     # load_balance_service_discovery()
     # ingress_controller_deployment()
     # nodejs()
-    check_cluster()
     # example_app()
+    check_cluster()
+    # ingress_2023()
+    helm()
     pass
 
 if __name__ == "__main__":
