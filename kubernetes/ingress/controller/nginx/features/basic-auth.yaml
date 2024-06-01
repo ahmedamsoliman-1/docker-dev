@@ -43,29 +43,8 @@ spec:
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
-metadata:
-  name: service-h
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
-spec:
-  ingressClassName: nginx
-  rules:
-  - host: public.services.com
-    http:
-      paths:
-      - path: /path-h(/|$)(.*)
-        pathType: Prefix
-        backend:
-          service:
-            name: service-h
-            port:
-              number: 3001
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
 metadata: 
   name: grafana
-  namespace: monitoring
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
@@ -81,6 +60,26 @@ spec:
             name: grafana
             port:
               number: 3000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata: 
+  name: alertmanager
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: public.services.com
+    http:
+      paths:
+      - path: /alertmanager(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: alertmanager-main
+            port:
+              number: 9093
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress

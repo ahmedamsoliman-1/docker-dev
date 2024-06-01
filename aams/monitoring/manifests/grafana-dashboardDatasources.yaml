@@ -7,7 +7,7 @@ metadata:
     app.kubernetes.io/part-of: kube-prometheus
     app.kubernetes.io/version: 8.3.3
   name: grafana-datasources
-  namespace: monitoring
+  namespace: default
 stringData:
   datasources.yaml: |-
     {

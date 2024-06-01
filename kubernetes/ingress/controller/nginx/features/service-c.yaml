@@ -29,7 +29,7 @@ data:
     http {
         sendfile        on;
         server {
-          listen       3000;
+          listen       80;
           server_name  localhost;
 
           location / {
@@ -65,7 +65,7 @@ spec:
       - name: nginx
         image: nginx:1.14.2
         ports:
-        - containerPort: 3000
+        - containerPort: 80
         volumeMounts:
         - name: html
           mountPath: "/usr/share/nginx/html/"
@@ -88,5 +88,5 @@ spec:
     app: service-c
   ports:
     - protocol: TCP
-      port: 3000
-      targetPort: 3000
+      port: 80
+      targetPort: 80

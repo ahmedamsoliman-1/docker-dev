@@ -204,9 +204,9 @@ def prometheus_II():
     run_command('kubectl create -f ./aams/monitoring/manifests/setup/')
     run_command('kubectl create -f ./aams/monitoring/manifests/')
 
-    run_command('kubectl get deploy -n monitoring')
-    run_command('kubectl get svc -n monitoring')
-    run_command('kubectl get pods -n monitoring')
+    # run_command('kubectl get deploy -n monitoring')
+    # run_command('kubectl get svc -n monitoring')
+    # run_command('kubectl get pods -n monitoring')
 
 def check_cluster():
     run_command('kubectl get nodes')
@@ -230,7 +230,7 @@ def helm():
 
 def main():
     # create_kind_cluster()
-    prometheus_II()
+    # prometheus_II()
     # prometheus()
     # monitor_ingress()
     # ingress()
@@ -246,9 +246,9 @@ def main():
     # nodejs()
     # example_app()
     # ingress_controller_deployment()
-    # check_cluster()
     # helm()
-    ingress_latest()
+    # ingress_latest()
+    check_cluster()
     pass
 
 if __name__ == "__main__":
