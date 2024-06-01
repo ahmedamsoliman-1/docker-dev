@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: service-a
+  name: kubernetes-dashboard
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
@@ -10,7 +10,7 @@ spec:
   - host: public.services.com
     http:
       paths:
-      - path: /path-a(/|$)(.*)
+      - path: /dashboard(/|$)(.*)
         pathType: Prefix
         backend:
           service:

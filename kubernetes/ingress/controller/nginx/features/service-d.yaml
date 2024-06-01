@@ -1,0 +1,92 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: service-h
+data:
+  path-a.html: |
+    "/path-a.html" on service-h
+  path-b.html: |
+    "/path-b.html" on service-h
+  index.html: |
+    "/" on service-h  
+  404.html: |
+    service-h 404 page
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: service-h-nginx.conf
+data:
+  nginx.conf: |
+    user  nginx;
+    worker_processes  1;
+    error_log  /var/log/nginx/error.log warn;
+    pid        /var/run/nginx.pid;
+    events {
+        worker_connections  1024;
+    }
+
+    http {
+        sendfile        on;
+        server {
+          listen       3001;
+          server_name  localhost;
+
+          location / {
+              root   /usr/share/nginx/html;
+              index  index.html index.htm;
+          }
+
+          error_page 404 /404.html;
+          error_page   500 502 503 504  /50x.html;
+          location = /50x.html {
+              root   /usr/share/nginx/html;
+          }
+        }
+    }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-h
+  labels:
+    app: service-h
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-h
+  template:
+    metadata:
+      labels:
+        app: service-h
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 3001
+        volumeMounts:
+        - name: html
+          mountPath: "/usr/share/nginx/html/"
+        - name: config
+          mountPath: "/etc/nginx/"
+      volumes:
+      - name: html
+        configMap:
+          name: service-h
+      - name: config
+        configMap:
+          name: service-h-nginx.conf
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-h
+spec:
+  selector:
+    app: service-h
+  ports:
+    - protocol: TCP
+      port: 3001
+      targetPort: 3001

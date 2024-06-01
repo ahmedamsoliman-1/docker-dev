@@ -57,7 +57,7 @@ def version():
 def ingress_latest():
 
     check_cluster()
-    run_command('kubect get svc -n ingress-nginx')
+    run_command('kubectl get svc -n ingress-nginx')
     pass
 
 def deployment():
@@ -200,9 +200,9 @@ def prometheus():
 
 
 def prometheus_II():
-    # run_command('kubectl get nodes')
-    # run_command('kubectl create -f ./aams/monitoring/manifests/setup/')
-    # run_command('kubectl create -f ./aams/monitoring/manifests/')
+    run_command('kubectl get nodes')
+    run_command('kubectl create -f ./aams/monitoring/manifests/setup/')
+    run_command('kubectl create -f ./aams/monitoring/manifests/')
 
     run_command('kubectl get deploy -n monitoring')
     run_command('kubectl get svc -n monitoring')
@@ -230,7 +230,7 @@ def helm():
 
 def main():
     # create_kind_cluster()
-    # prometheus_II()
+    prometheus_II()
     # prometheus()
     # monitor_ingress()
     # ingress()
