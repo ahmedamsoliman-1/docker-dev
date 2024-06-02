@@ -26,10 +26,10 @@ spec:
     spec:
       containers:
       - name: example-app
-        image: aimvector/python:1.0.4
+        image: nginx:latest
         imagePullPolicy: Always
         ports:
-        - containerPort: 5000
+        - containerPort: 80
         # livenessProbe:
         #   httpGet:
         #     path: /status

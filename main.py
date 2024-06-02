@@ -224,6 +224,12 @@ def check_cluster_for_ns(namespace):
     run_command(f'kubectl get svc -n {namespace}')
     run_command(f'kubectl get po -n {namespace}')
 
+def cert_manager():
+    # run_command('curl -LO https://github.com/cert-manager/cert-manager/releases/download/v1.14.5/cert-manager.yaml')
+    run_command('kubectl create ns cert-manager')
+    run_command('kubectl apply --validate=false -f kubernetes/cert-manager/cert-manager-1.14.5.yaml')
+    run_command('kubectl -n cert-manager get all')
+
 def example_app():
     # run_command('kubectl create ns example-app')
     # run_command('kubectl create -f ./aams/example-app-1/nginx-deployment.yaml')
@@ -237,6 +243,22 @@ def jenkins():
     run_command('kubectl create ns jenkins')
     run_command('kubectl -n jenkins apply -f ./jenkins')
     pass
+
+def test_self_singed_cert():
+    run_command('kubectl create ns cert-manager-test')
+    run_command('kubectl apply -f kubernetes/cert-manager/selfsigned/issuer.yaml')
+    run_command('kubectl apply -f kubernetes/cert-manager/selfsigned/certificate.yaml')
+    run_command('kubectl -n cert-manager-test describe certificate')
+    run_command('kubectl -n cert-manager-test get secrets')
+
+def lets_enrpit():
+    run_command('kubectl apply -f kubernetes/cert-manager/cert-issuer-nginx-ingress.yaml')
+    run_command('kubectl describe clusterissuer letsencrypt-cluster-issuer')
+
+    # Deploy example app
+    run_command('kubectl apply -f kubernetes\deployments')
+    run_command('kubectl apply -f kubernetes/cert-manager/ingress.yaml')
+    run_command('kubectl apply -f kubernetes/cert-manager/certificate.yaml')
 
 def main():
     # create_kind_cluster()
@@ -259,8 +281,12 @@ def main():
     # helm()
     # ingress_latest()
     # check_cluster()
-    jenkins()
-    check_cluster_for_ns('jenkins')
+    # jenkins()
+    # check_cluster_for_ns('monitoring')
+    # cert_manager()
+    # test_self_singed_cert()
+    lets_enrpit()
+    # check_cluster_for_ns('cert-manager')
     pass
 
 if __name__ == "__main__":

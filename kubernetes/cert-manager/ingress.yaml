@@ -7,10 +7,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - marcel.guru
+    - local.ahmedalimsoliman.com
     secretName: example-app-tls
   rules:
-  - host: marcel.guru
+  - host: local.ahmedalimsoliman.com
     http:
       paths:
       - path: /
