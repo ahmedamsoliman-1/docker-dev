@@ -216,6 +216,14 @@ def check_cluster():
     run_command('kubectl get svc --all-namespaces')
     run_command('kubectl get po --all-namespaces')
 
+def check_cluster_for_ns(namespace):
+    run_command('kubectl get nodes')
+    run_command('kubectl get ns')
+
+    run_command(f'kubectl get deploy -n {namespace}')
+    run_command(f'kubectl get svc -n {namespace}')
+    run_command(f'kubectl get po -n {namespace}')
+
 def example_app():
     # run_command('kubectl create ns example-app')
     # run_command('kubectl create -f ./aams/example-app-1/nginx-deployment.yaml')
@@ -225,7 +233,9 @@ def example_app():
 def ingress_2023():
     pass
 
-def helm():
+def jenkins():
+    run_command('kubectl create ns jenkins')
+    run_command('kubectl -n jenkins apply -f ./jenkins')
     pass
 
 def main():
@@ -248,7 +258,9 @@ def main():
     # ingress_controller_deployment()
     # helm()
     # ingress_latest()
-    check_cluster()
+    # check_cluster()
+    jenkins()
+    check_cluster_for_ns('jenkins')
     pass
 
 if __name__ == "__main__":
