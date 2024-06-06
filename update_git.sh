@@ -3,8 +3,6 @@
 git config --global user.name "Ahmed Ali Mohamed Soliman"
 git config --global user.email "ahmed-3010@hotmail.com"
 
-git branch -a > branches.log
-
 city=$(curl -s ipinfo.io/city)
 country=$(curl -s ipinfo.io/country)
 
