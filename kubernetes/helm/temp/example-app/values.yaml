@@ -1,3 +1,0 @@
-deployment:
-  image: "nginx"
-  tag: "latest"
